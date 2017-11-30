@@ -62,3 +62,7 @@ else
 	sleep 1
 	exit 1
 fi
+
+echo "Step 5 \nRemoval of user nexus"
+userdel nexus
+sleep 1
