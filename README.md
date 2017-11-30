@@ -77,7 +77,7 @@ To uninstall the OSS Nexus server, one need make the uninstallation script execu
 
 It will be there soon.
 
-[Erekle Magradze]: erekle@magradze.de
+[Erekle Magradze](erekle@magradze.de)
 
 # OSS NEXUS სერვერის ინსტალაცია CentOS 7-ზე
 
@@ -158,4 +158,4 @@ OSS Nexus-ის წასაშლელად საჭიროა რომ 
 
 ...
 
-[ერეკლე მაღრაძე]: erekle@magradze.de
+[ერეკლე მაღრაძე](erekle@magradze.de)
