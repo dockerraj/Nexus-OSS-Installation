@@ -99,6 +99,7 @@ else
 		systemctl enable nexus
 		firewall-cmd --permanent --add-port=8081/tcp
 		firewall-cmd --reload
+		chown -R nexus.nexus /var/nexus
 		systemctl start nexus		
 	  else
 	  	echo $nexus_dir" already exists"	
