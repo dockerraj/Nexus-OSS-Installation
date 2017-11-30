@@ -59,6 +59,16 @@ else
 	echo "JAVA_HOME location is" $JAVA_HOME
 fi	
 
+echo "Adding user nexus (if it doesn't exist), for running the service under it."
+sleep 2
+id nexus
+nexus_id_check_exit_code=`echo $?`
+if [ $nexus_id_check_exit_code -eq 0 ]; then
+	echo "user nexus exists"
+else
+	useradd nexus
+	echo "User nexus appended to the system"
+fi		
 
 echo "Step 3 \nGet the exact name of the nexus tar.gz file"
 sleep 2
@@ -84,7 +94,7 @@ else
 		echo "Update the JVM path in the nexus runner script"
 		nexus_runner_script=`find / -name nexus | grep bin`
 		sed -i "/# INSTALL4J_JAVA_HOME_OVERRIDE=/c\INSTALL4J_JAVA_HOME_OVERRIDE=/usr/java/default" $nexus_runner_script
-		echo -e "[Unit] \nDescription=nexus service \nAfter=network.target \n\n[Service] \nType=forking \nLimitNOFILE=65536 \nExecStart="$nexus_runner_script" start \nExecStop="$nexus_runner_script" stop \nUser=root \nRestart=on-abort \n[Install] \nWantedBy=multi-user.target \n" > /etc/systemd/system/nexus.service
+		echo -e "[Unit] \nDescription=nexus service \nAfter=network.target \n\n[Service] \nType=forking \nLimitNOFILE=65536 \nExecStart="$nexus_runner_script" start \nExecStop="$nexus_runner_script" stop \nUser=nexus \nRestart=on-abort \n[Install] \nWantedBy=multi-user.target \n" > /etc/systemd/system/nexus.service
 		systemctl daemon-reload
 		systemctl enable nexus
 		firewall-cmd --permanent --add-port=8081/tcp
