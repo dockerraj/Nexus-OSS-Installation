@@ -1,14 +1,18 @@
 #!/bin/bash
+echo "Step 1 \ninstallation of epel repository, Development Packages and update of the system."
 sleep 2
-echo "Step 1: installation of epel repository, Development Packages and update of the system."
+
 yum install epel-release -y
 yum groupinstall "Development Tools" -y
 yum update -y
 
+
+echo "Step 2 \nInstallation of JDK, initialization of java home, if it is not installed already."
 sleep 2
-echo "Step 2: Installation of JDK, initialization of java home, if it is not installed already."
+
 rpm -qa | grep jdk > /dev/null 
 is_jdk_installed=$(echo $?)
+
 if [ $is_jdk_installed -eq 0 ]; then
 	echo "JDK is installed"
 else
@@ -21,6 +25,7 @@ else
 	fi
 
 fi	
+
 cat /etc/profile | grep JAVA_
 is_java_home_defined=$(echo $?)
 if [ $is_java_home_defined -eq 0 ]; then
@@ -35,9 +40,11 @@ else
 	echo "JAVA_HOME location is" $JAVA_HOME
 fi	
 
+
+echo "Step 3 \nGet the exact name of the nexus tar.gz file"
 sleep 2
-echo "Step 3: Get the exact name of the nexus tar.gz file"
 nexus_package_name=$(echo `ls -alF /opt | grep nexus | grep tar.gz`)
+
 if [ -z "$nexus_package_name" ]; then
       echo "nexus...tar.gz package is not located on /opt, make sure that you copied it in /opt."
 else
@@ -68,7 +75,3 @@ else
 	  	echo $nexus_dir" already exists"	
 	  fi
 fi
-
-
-
-
