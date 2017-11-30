@@ -1,11 +1,30 @@
 #!/bin/bash
+
+nexus_service_isactive_status=`systemctl is-active nexus`
+if [ $nexus_service_isactive_status == "unknown" ]; then
+	echo "Nexus service has not been detected, we will continue installation."
+	sleep 1
+elif [ $nexus_service_isactive_status == "inactive" ]; then
+	echo "Nexus service is stopped and seems to be installed. \nIf you want to re-install it, first use uninstall-sonatype-nexus3.sh script."
+	systemctl disable nexus
+	sleep 1
+	exit 3
+elif [ $nexus_service_isactive_status == "active" ]; then
+	echo "Aparently you already installed Nexus service. \nIf you want to re-install it, first use uninstall-sonatype-nexus3.sh script."
+	sleep 1
+	exit 3
+else
+	echo "Something fishy is going on here. \nScript will be stopped now!!!"
+	sleep 1
+	exit 3
+fi
+
 echo "Step 1 \ninstallation of epel repository, Development Packages and update of the system."
 sleep 2
 
 yum install epel-release -y
 yum groupinstall "Development Tools" -y
 yum update -y
-
 
 echo "Step 2 \nInstallation of JDK, initialization of java home, if it is not installed already."
 sleep 2
