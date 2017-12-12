@@ -36,6 +36,18 @@ else
 	sleep 1
 fi
 
+nexus_service_file_multiuser="/etc/systemd/system/multi-user.target.wants/nexus.service"
+
+if [[ -f $nexus_service_file_multiuser ]]; then
+        rm -rf $nexus_service_file_multiuser
+        echo $nexus_service_file_multiuser" file got removed."
+        systemctl daemon-reload
+        sleep 1
+else
+        echo $nexus_service_file_multiuser" file does not exist."
+        sleep 1
+fi
+
 echo "Step 3 \nClosing nexus tcp port 8081."
 sleep 2
 firewall-cmd --list-ports | grep 8081
