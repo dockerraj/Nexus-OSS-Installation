@@ -16,6 +16,12 @@ elif [ $nexus_service_isactive_status == "active" ]; then
 	systemctl stop nexus
 	systemctl disable nexus
 	sleep 1
+elif [ $nexus_service_isactive_status == "failed" ]; then
+        echo "Nexus service will be stopped and disabled"
+        systemctl stop nexus
+        systemctl disable nexus
+        systemctl daemon-reload
+        sleep 1
 else
 	echo "Something fishy is going on here. \nScript will be stopped now!!!"
 	sleep 1
