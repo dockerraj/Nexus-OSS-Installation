@@ -35,9 +35,9 @@ is_jdk_installed=$(echo $?)
 if [ $is_jdk_installed -eq 0 ]; then
 	printf "JDK is installed\n"
 else
-	jdk_package_name=$(echo `ls -alF /opt | grep jdk- | grep bin.rpm`)
+	jdk_package_name=$(echo `ls -alF /opt | grep jdk- | grep .rpm`)
 	if [ -z "$jdk_package_name" ]; then
-		printf "jdk...bin.rpm package is not located on /opt, make sure that you copied it in /opt.\n"
+		printf "jdk...rpm package is not located on /opt, make sure that you copied it in /opt.\n"
 	else
 		jdk_package_name=$(echo $jdk_package_name | tr ' ' '\n' | tail -1)
 		rpm -ihv /opt/$jdk_package_name
