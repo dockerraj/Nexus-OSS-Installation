@@ -15,6 +15,7 @@ elif [ $nexus_service_isactive_status == "active" ]; then
 	printf "Nexus service will be stopped and disabled\n"
 	systemctl stop nexus
 	systemctl disable nexus
+	systemctl reset-failed
 	sleep 1
 elif [ $nexus_service_isactive_status == "failed" ]; then
         printf "Nexus service will be stopped and disabled\n"
