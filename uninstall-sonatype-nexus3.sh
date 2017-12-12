@@ -2,6 +2,7 @@
 printf "Step 1 \nIt is assumed that for installation of sonatype nexus the install-sonatype-nexus3.sh has been use. \nOtherwise it is not recommended to use this script for uninstallation of OSS Sonatype Nexus server. \nRun this script as root. \nNow checking if service is running.\n"
 sleep 2
 
+systemctl reset-failed
 nexus_service_isactive_status=`systemctl is-active nexus`
 if [ $nexus_service_isactive_status == "unknown" ]; then
 	printf "Are you sure that nexus is installed with the install-sonatype-nexus3.sh script? \nMAKE SURE THAT install-sonatype-nexus3.sh script is used and come back to this script after. /nFor now Bye\n"
@@ -15,7 +16,6 @@ elif [ $nexus_service_isactive_status == "active" ]; then
 	printf "Nexus service will be stopped and disabled\n"
 	systemctl stop nexus
 	systemctl disable nexus
-	systemctl reset-failed
 	sleep 1
 elif [ $nexus_service_isactive_status == "failed" ]; then
         printf "Nexus service will be stopped and disabled\n"
